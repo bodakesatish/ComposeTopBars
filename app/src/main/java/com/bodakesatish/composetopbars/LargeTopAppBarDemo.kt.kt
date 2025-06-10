@@ -9,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -20,22 +21,22 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 // Defines a Composable function for this screen.
 @Composable
-fun StandardTopAppBarDemo(navController: NavController) {
+fun LargeTopAppBarDemo(navController: NavController) {
     // LocalContext provides access to the Android Context, used here for showing Toasts.
     val context = LocalContext.current
 
-    val standardScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior() // For Small/Center, often pinned.
+    val largeScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
     // Scaffold provides the basic Material Design visual layout structure.
     // It has slots for TopAppBar, BottomAppBar, FloatingActionButton, Drawer, and the main content.
     Scaffold(
-        modifier = Modifier.nestedScroll(standardScrollBehavior.nestedScrollConnection), // Or NoOp if no scroll behavior needed
+        modifier = Modifier.nestedScroll(largeScrollBehavior.nestedScrollConnection), // Or NoOp if no scroll behavior needed
         // `topBar` lambda slot expects a Composable that defines the top app bar.
         topBar = {
-            StandardTopAppBarContent(
+            LargeTopAppBarContent(
                 navController = navController,
                 context = context,
-                scrollBehavior = standardScrollBehavior // Can be null if no scroll interaction desired
+                scrollBehavior = largeScrollBehavior // Can be null if no scroll interaction desired
             )
         },
         // `floatingActionButton` slot for a FAB (optional).
@@ -56,18 +57,15 @@ fun StandardTopAppBarDemo(navController: NavController) {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun PreviewStandardTopAppBarDemo() {
+fun PreviewLargeTopAppBarDemo() {
     MaterialTheme {
         // Option A: Simplest fake NavController (if you don't interact with it in the preview)
         val fakeNavController = NavController(LocalContext.current)
         // OR if you just need a NavController that doesn't crash and has some basic methods
         // val fakeNavController = remember { NavController(LocalContext.current) }
 
-        StandardTopAppBarDemo(navController = fakeNavController)
-        // Or if simple is enough:
-        // StandardTopAppBarDemo(navController = NavController(LocalContext.current))
+        LargeTopAppBarDemo(navController = fakeNavController)
     }
 }

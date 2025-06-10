@@ -14,6 +14,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -23,13 +24,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 
 // 1. Small TopAppBar (default type)
 @OptIn(ExperimentalMaterial3Api::class) // Needed for TopAppBar and its scrollBehavior
 @Composable
-fun StandardTopAppBarDemo(
+fun StandardTopAppBarContent(
     navController: NavController,
     context: android.content.Context,
     scrollBehavior: TopAppBarScrollBehavior? // Nullable if the bar should not react to scroll
@@ -122,6 +125,24 @@ fun OverflowMenuDemo(context: android.content.Context) {
                     Toast.makeText(context, "About Clicked", Toast.LENGTH_SHORT).show()
                     showMenu = false
                 }
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+private fun StandardTopAppBarPreview() {
+    val context = LocalContext.current
+    val standardScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val fakeNavController = NavController(LocalContext.current)
+    MaterialTheme {
+        Surface {
+            StandardTopAppBarContent(
+                navController = fakeNavController,
+                context = context,
+                scrollBehavior = standardScrollBehavior
             )
         }
     }
