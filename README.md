@@ -141,6 +141,5 @@ fun CenterAlignedTopAppBarDemo(
 }
 ```
 
-![CenterAlignedTopAppBar  Demo](screenshots/center_aligned_top_app_bar_demo.png)
-
+![TopAppBar  Demo](screenshots/center_aligned_top_app_bar_demo.png)
 -----
