@@ -5,9 +5,10 @@
 
 ```kotlin
 
+// 1. Small TopAppBar (default type)
 @OptIn(ExperimentalMaterial3Api::class) // Needed for TopAppBar and its scrollBehavior
 @Composable
-fun StandardTopAppBarDemo(
+fun StandardTopAppBarContent(
    navController: NavController,
    context: android.content.Context,
    scrollBehavior: TopAppBarScrollBehavior? // Nullable if the bar should not react to scroll
@@ -16,7 +17,7 @@ fun StandardTopAppBarDemo(
    TopAppBar(
       title = {
          Text(
-            "Standard TopAppBar",
+            "Small TopAppBar",
             maxLines = 1, // Ensure title doesn't wrap to multiple lines unexpectedly.
             overflow = TextOverflow.Ellipsis // Add ellipsis if title is too long.
          )
@@ -60,7 +61,125 @@ fun StandardTopAppBarDemo(
    )
 }
 
-// Helper composable for a simple Overflow Menu in TopAppBar actions.
+```
+
+![Standard TopAppBar Demo](screenshots/standard_top_bar.png)
+
+-----
+
+2. **CenterAlignedTopAppBar Demo:**
+* `CenterAlignedTopAppBar ` (CenterAlignedTopAppBar)`
+
+```kotlin
+
+@Composable
+fun CenterAlignedTopAppBarContent(
+   navController: NavController,
+   context: android.content.Context,
+   scrollBehavior: TopAppBarScrollBehavior?
+) {
+   // `CenterAlignedTopAppBar` places the title in the center of the app bar.
+   CenterAlignedTopAppBar(
+      title = { Text("Center-Aligned-Title") },
+      navigationIcon = {
+         IconButton(onClick = { navController.navigateUp() }) { // Assuming back navigation for simplicity
+            Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+         }
+      },
+      actions = {
+         IconButton(onClick = { Toast.makeText(context, "Settings Clicked!", Toast.LENGTH_SHORT).show() }) {
+            Icon(Icons.Filled.Settings, "Settings")
+         }
+      },
+      scrollBehavior = scrollBehavior
+      // Custom colors can be applied here too using TopAppBarDefaults.centerAlignedTopAppBarColors()
+   )
+}
+
+```
+
+![CenterAlignedTopAppBar Demo](screenshots/center_aligned_top_app_bar.png)
+-----
+
+3. **MediumTopAppBar Demo:**
+* `MediumTopAppBar ` (MediumTopAppBar)`
+
+```kotlin
+@Composable
+fun MediumTopAppBarContent(
+   navController: NavController,
+   context: android.content.Context,
+   scrollBehavior: TopAppBarScrollBehavior // Scroll behavior is typically required for Medium/Large.
+) {
+   // `MediumTopAppBar` has a larger collapsed height and expands further when content is scrolled up.
+   // It requires a `scrollBehavior` to work correctly.
+   MediumTopAppBar(
+      title = { Text("Medium TopAppBar") },
+      navigationIcon = {
+         IconButton(onClick = { navController.navigateUp() }) {
+            Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+         }
+      },
+      actions = {
+         IconButton(onClick = {
+            Toast.makeText(context, "Favorite Clicked!", Toast.LENGTH_SHORT).show()
+         }) {
+            Icon(Icons.Filled.Favorite, "Favorite")
+         }
+      },
+      scrollBehavior = scrollBehavior,// This makes the app bar react to scrolling.
+      // `colors` can be used to customize background, title, and icon colors.
+      colors = TopAppBarDefaults.topAppBarColors(
+         containerColor = MaterialTheme.colorScheme.primaryContainer,
+         titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+         navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+         actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+      )
+   )
+}
+
+```
+
+![MediumTopAppBar Demo](screenshots/medium_top_app_bar_collapsed.png)
+![MediumTopAppBar Demo](screenshots/medium_top_app_bar_expanded.png)
+-----
+
+4. **LargeTopAppBar Demo:**
+* `LargeTopAppBar ` (LargeTopAppBar)`
+
+```kotlin
+
+@Composable
+fun LargeTopAppBarContent(
+   navController: NavController,
+   context: Context,
+   scrollBehavior: TopAppBarScrollBehavior // Scroll behavior is typically required for Medium/Large.
+) {
+   // `MediumTopAppBar` has a larger collapsed height and expands further when content is scrolled up.
+   // It requires a `scrollBehavior` to work correctly.
+   LargeTopAppBar(
+      title = { Text("Large TopAppBar", maxLines = 2, overflow = TextOverflow.Ellipsis) },
+      navigationIcon = {
+         IconButton(onClick = {navController.navigateUp()}) {
+            Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+         }
+      },
+      actions = {
+         OverflowMenuDemo(context)
+
+      },
+      scrollBehavior = scrollBehavior// This makes the app bar react to scrolling.
+   )
+}
+
+```
+
+![LargeTopAppBar Demo](screenshots/large_top_app_bar.png)
+-----
+
+* `Helper composable for a simple Overflow Menu in TopAppBar actions.`
+```kotlin
+
 @Composable
 fun OverflowMenuDemo(context: android.content.Context) {
    // State to control the visibility of the DropdownMenu.
@@ -105,41 +224,7 @@ fun OverflowMenuDemo(context: android.content.Context) {
    }
 }
 
+
 ```
 
-![Standard TopAppBar Demo](screenshots/standard_top_app_bar_demo.png)
-
------
-
-2. **CenterAlignedTopAppBar Demo:**
-* `CenterAlignedTopAppBar ` (CenterAlignedTopAppBar)`
-
-```kotlin
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CenterAlignedTopAppBarDemo(
-    navController: NavController,
-    context: android.content.Context,
-    scrollBehavior: TopAppBarScrollBehavior?
-) {
-    // `CenterAlignedTopAppBar` places the title in the center of the app bar.
-    CenterAlignedTopAppBar(
-        title = { Text("Center-Aligned") },
-        navigationIcon = {
-            IconButton(onClick = { navController.navigateUp() }) { // Assuming back navigation for simplicity
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
-            }
-        },
-        actions = {
-            IconButton(onClick = { Toast.makeText(context, "Settings Clicked!", Toast.LENGTH_SHORT).show() }) {
-                Icon(Icons.Filled.Settings, "Settings")
-            }
-        },
-        scrollBehavior = scrollBehavior
-        // Custom colors can be applied here too using TopAppBarDefaults.centerAlignedTopAppBarColors()
-    )
-}
-```
-
-![TopAppBar  Demo](screenshots/center_aligned_top_app_bar_demo.png)
------
+![TopAppBar Demo](screenshots/top_app_bar_demo.png)
