@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeTopBarsTheme {
                 val fakeNavController = NavController(LocalContext.current)
-                StandardTopAppBarDemo(fakeNavController)
+                CenterAlignedTopAppBarDemo(fakeNavController)
             }
         }
     }
@@ -25,7 +25,16 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun StandardTopAppBarDemoPreview() {
+    ComposeTopBarsTheme {
+        val fakeNavController = NavController(LocalContext.current)
+        CenterAlignedTopAppBarDemo(fakeNavController)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CenterAlignedTopAppBarDemoPreview() {
     ComposeTopBarsTheme {
         val fakeNavController = NavController(LocalContext.current)
         StandardTopAppBarDemo(fakeNavController)

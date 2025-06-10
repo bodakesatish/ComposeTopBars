@@ -31,7 +31,7 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 // Defines a Composable function for this screen.
 @Composable
-fun TopAppBarDemo(navController: NavController) {
+fun StandardTopAppBarDemo(navController: NavController) {
     // LocalContext provides access to the Android Context, used here for showing Toasts.
     val context = LocalContext.current
 
@@ -43,7 +43,7 @@ fun TopAppBarDemo(navController: NavController) {
         modifier = Modifier.nestedScroll(standardScrollBehavior.nestedScrollConnection), // Or NoOp if no scroll behavior needed
         // `topBar` lambda slot expects a Composable that defines the top app bar.
         topBar = {
-            CenterAlignedTopAppBarDemo(
+            StandardTopAppBarDemo(
                 navController = navController,
                 context = context,
                 scrollBehavior = standardScrollBehavior // Can be null if no scroll interaction desired
@@ -95,14 +95,14 @@ fun TopAppBarDemo(navController: NavController) {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewScaffoldAndTopAppBarExampleScreen() {
+fun PreviewStandardTopAppBarDemo() {
     MaterialTheme {
         // Option A: Simplest fake NavController (if you don't interact with it in the preview)
         val fakeNavController = NavController(LocalContext.current)
         // OR if you just need a NavController that doesn't crash and has some basic methods
         // val fakeNavController = remember { NavController(LocalContext.current) }
 
-        TopAppBarDemo(navController = fakeNavController)
+        StandardTopAppBarDemo(navController = fakeNavController)
         // Or if simple is enough:
         // StandardTopAppBarDemo(navController = NavController(LocalContext.current))
     }
